@@ -1,11 +1,25 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Button} from 'react-native';
 import {black} from '../../configs/colors';
 
-const Test = () => {
+const Test = (props) => {
+  const {navigation} = props;
+
+  const navigateToDifferentPage = () => {
+    navigation.navigate('Home'); // Replace 'Details' with the actual route name
+  };
+
+  const navigateToOtherStack = () => {
+    navigation.replace('AuthStack', {screen: 'Auth'});
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Hello Test</Text>
+      <Text style={styles.titleText}>Stack 1 - Test</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Go to Home" onPress={navigateToDifferentPage} />
+        <Button title="Go to Stack 2" onPress={navigateToOtherStack} />
+      </View>
     </View>
   );
 };
@@ -20,6 +34,12 @@ const styles = StyleSheet.create({
     color: black,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  buttonContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%', // Adjust the width as needed
   },
 });
 

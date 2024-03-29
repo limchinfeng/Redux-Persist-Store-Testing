@@ -19,10 +19,20 @@ function goBack() {
   _navigator.dispatch(CommonActions.goBack());
 }
 
+function replace(routeName, params = {}) {
+  _navigator.dispatch(
+    CommonActions.replace({
+      name: routeName,
+      params,
+    }),
+  );
+}
+
 // add other navigation functions that you need and export them
 
 export default {
   navigate,
   goBack,
   setTopLevelNavigator,
+  replace,
 };
