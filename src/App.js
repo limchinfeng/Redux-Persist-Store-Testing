@@ -7,7 +7,7 @@ import AppRouter from './AppRouter';
 
 // const {store, persistor} = configureStore();
 
-import { store } from './config-store';
+import { store, persistor } from './config-store';
 
 console.disableYellowBox = true;
 
@@ -16,9 +16,9 @@ class App extends Component {
     return (
       <SafeAreaProvider>
         <Provider store={store}>
-          {/* <PersistGate loading={null} persistor={persistor}>  */}
+          <PersistGate loading={null} persistor={persistor}> 
             <AppRouter />
-          {/* </PersistGate> */}
+          </PersistGate>
         </Provider>
       </SafeAreaProvider>
     );
