@@ -1,9 +1,14 @@
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
 import {black} from '../../configs/colors';
+import {useDispatch, useSelector} from 'react-redux';
+import { decrement, increment, incrementByAmount, setSignIn } from '../../models/home/counterSlice';
 
 const Page = props => {
   const {navigation} = props;
+  const dispatch = useDispatch();
+  const {value, signIn} = useSelector(state => state.home);
+  const {data} = useSelector(state => state.auth);
 
   const navigateToDifferentPage = () => {
     navigation.navigate('Auth'); // Replace 'Details' with the actual route name
@@ -19,6 +24,16 @@ const Page = props => {
       <View style={styles.buttonContainer}>
         <Button title="Go to Auth" onPress={navigateToDifferentPage} />
         <Button title="Go to Stack 1" onPress={navigateToOtherStack} />
+      </View>
+      <View>
+        <Text style={styles.titleText}>{value} - {signIn ? 'Signed In' : 'Not Signed In'}</Text>
+        <Text  style={styles.titleText}>{data.id ? data.id + " " + data.username : 'Not user'}</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Plus" onPress={() => dispatch(increment())} />
+        <Button title="Plus 4" onPress={() => dispatch(incrementByAmount(4))} />
+        <Button title="Minus" onPress={() => dispatch(decrement())} />
+        <Button title="set Sign in" onPress={() => dispatch(setSignIn())} />
       </View>
     </View>
   );
@@ -38,7 +53,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    gap: 5,
     width: '80%', // Adjust the width as needed
   },
 });

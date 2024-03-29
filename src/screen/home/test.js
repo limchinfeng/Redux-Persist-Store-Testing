@@ -1,9 +1,27 @@
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
 import {black} from '../../configs/colors';
+import {useDispatch, useSelector} from 'react-redux';
+import {decrement, increment} from '../../models/home/counterSlice';
+import { addUserDetails } from '../../models/home/authSlice';
+
+const userDetails = {
+  id: 15,
+  username: 'kminchelle',
+  email: 'kminchelle@qq.com',
+  firstName: 'Jeanne',
+  lastName: 'Halvorson',
+  gender: 'female',
+  image: 'https://robohash.org/Jeanne.png?set=set4',
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxMTIwOTAwMSwiZXhwIjoxNzExMjEyNjAxfQ.F_ZCpi2qdv97grmWiT3h7HcT1prRJasQXjUR4Nk1yo8',
+};
 
 const Test = (props) => {
   const {navigation} = props;
+  const dispatch = useDispatch();
+  const {value, signIn} = useSelector(state => state.home);
+  const {data} = useSelector(state => state.auth)
 
   const navigateToDifferentPage = () => {
     navigation.navigate('Home'); // Replace 'Details' with the actual route name
@@ -19,6 +37,15 @@ const Test = (props) => {
       <View style={styles.buttonContainer}>
         <Button title="Go to Home" onPress={navigateToDifferentPage} />
         <Button title="Go to Stack 2" onPress={navigateToOtherStack} />
+      </View>
+      <View>
+        <Text style={styles.titleText}>{value} - {signIn ? 'Signed In' : 'Not Signed In'}</Text>
+        <Text  style={styles.titleText}>{data.id ? data.id + " " + data.username : 'Not user'}</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Plus" onPress={() => dispatch(increment())} />
+        <Button title="Minus" onPress={() => dispatch(decrement())} />
+        <Button title="User" onPress={() => dispatch(addUserDetails(userDetails))} />
       </View>
     </View>
   );
@@ -38,7 +65,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    gap: 5,
     width: '80%', // Adjust the width as needed
   },
 });
