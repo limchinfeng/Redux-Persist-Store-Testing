@@ -4,10 +4,20 @@ import authSlice from "./models/home/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   home: counterSlice,
   auth: authSlice,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    // Simple reset, may cause reducers to re-initialize with their default states.
+    state = undefined;
+    AsyncStorage.clear();
+  }
+
+  return appReducer(state, action);
+};
 
 const persistConfig = {
   key: 'root',

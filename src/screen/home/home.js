@@ -26,14 +26,19 @@ const Home = (props) => {
         <Button title="Go to Stack 2" onPress={navigateToOtherStack} />
       </View>
       <View>
-        <Text style={styles.titleText}>{value} - {signIn ? 'Signed In' : 'Not Signed In'}</Text>
-        <Text  style={styles.titleText}>{data.id ? data.id + " " + data.username : 'Not user'}</Text>
+        <Text style={styles.titleText}>
+          {value} - {signIn ? 'Signed In' : 'Not Signed In'}
+        </Text>
+        <Text style={styles.titleText}>
+          {data.id ? data.id + ' ' + data.username : 'Not user'}
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <Button title="Plus" onPress={() => dispatch(increment())} />
         <Button title="Plus 4" onPress={() => dispatch(incrementByAmount(4))} />
         <Button title="Minus" onPress={() => dispatch(decrement())} />
         <Button title="set Sign in" onPress={() => dispatch(setSignIn())} />
+        <Button title="clear" onPress={() => dispatch({type: 'USER_LOGOUT'})} />
       </View>
     </View>
   );
